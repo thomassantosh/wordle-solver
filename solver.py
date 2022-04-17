@@ -2,6 +2,7 @@
 while playing the real game."""
 import random
 import logging
+from collections import Counter
 logging.basicConfig(level=logging.INFO, format='%(asctime)s:%(levelname)s:%(message)s')
 def prGreen(skk): print("\033[92m {}\033[00m" .format(skk))
 def prYellow(skk): print("\033[93m {}\033[00m" .format(skk))
@@ -36,6 +37,25 @@ def wordle_solver(word_list=None):
     for i in range(6):
         guess = str(input(f"What is guess number {i}:")).upper()
         logging.info(f"Inputted guess: {guess}")
+
+        # Logic to account for when a letter in a word can duplicate, and have >1 response
+        # For ex, "WHICH" has 2 Hs. "CHEEK" has only 1. Wordle response: NCNLN. H has 2 responses.
+        # The specific case that came up included the following process:
+            # NYMPH : nnnnl
+            # GOURD : nnnnn
+            # BLAST : nnnnn
+            # WHICH : ncnln
+            # CHEEK : ccccc (lucky guess)
+
+        # Identify the letters that have duplicates
+        duplicate_list = []
+        test_for_counter = dict(Counter(guess))
+        for key,val in test_for_counter.items():
+            if val > 1:
+                duplicate_list.append(key)
+                logging.info(f"Duplicate values found. See list: {duplicate_list}")
+
+        # Get wordle feedback
         guess_result = str(input(f"What is the wordle feedback for {i}?")).upper()
         logging.info(f"Inputted guess result: {guess_result}")
 
@@ -44,6 +64,17 @@ def wordle_solver(word_list=None):
             logging.info(prGreen(f"Congrats! Word is {guess}."))
             break
 
+        # If duplicate list exists, substitute any Ns for duplicate with Ls
+        if len(duplicate_list) != 0:
+            guess_result_list = list(guess_result)
+            for pos,letter in enumerate(guess):
+                if letter in duplicate_list:
+                    if guess_result[pos] == 'N':
+                        guess_result_list[pos] = 'L'
+            guess_result = ''.join(guess_result_list)
+            logging.info(f"Revised guess result: {guess_result}")
+
+        # Filter word list
         for j,val in enumerate(guess_result):
             match val:
                 case "C":
