@@ -93,11 +93,16 @@ def wordle_solver(word_list=None):
 
         logging.info(f"Dense words to try: {dense_list}")
 
+        # Take out the actual guess from word list if proceeding
+        if guess in word_list:
+            word_list.remove(guess)
+
         # Show word list if less than or equal to five words
         if len(word_list) <= 5:
             logging.info(prCyan(f"Current word list: {word_list}"))
 
         logging.info(prCyan(f"Final suggested word list: {word_list}"))
+
 
 def main():
     """Main operational flow"""
