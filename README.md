@@ -1,7 +1,7 @@
 # wordle-solver
 Wordle is addictive, but time-consuming. 
 
-Humans make tools to aid them in problem-solving. While having a tool to solve Wordle faster robs one of some
+Humans make tools to aid them in problem-solving. While having a tool to solve Wordle faster robs some
 of the pleasurable cognitive load of finding an answer, at times, expediency matters more. This code leverages
 the dictionary from this [source](http://www-personal.umich.edu/~jlawler/wordlist.html). 
 
