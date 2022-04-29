@@ -38,23 +38,6 @@ def wordle_solver(word_list=None):
         guess = str(input(f"What is guess number {i}:")).upper()
         logging.info(f"Inputted guess: {guess}")
 
-        # Logic to account for when a letter in a word can duplicate, and have >1 response
-        # For ex, "WHICH" has 2 Hs. "CHEEK" has only 1. Wordle response: NCNLN. H has 2 responses.
-        # The specific case that came up included the following process:
-            # NYMPH : nnnnl
-            # GOURD : nnnnn
-            # BLAST : nnnnn
-            # WHICH : ncnln
-            # CHEEK : ccccc (lucky guess)
-
-        # Identify the letters that have duplicates
-        duplicate_list = []
-        test_for_counter = dict(Counter(guess))
-        for key,val in test_for_counter.items():
-            if val > 1:
-                duplicate_list.append(key)
-                logging.info(f"Duplicate values found. See list: {duplicate_list}")
-
         # Get wordle feedback
         guess_result = str(input(f"What is the wordle feedback for {i}?")).upper()
         logging.info(f"Inputted guess result: {guess_result}")
@@ -64,8 +47,34 @@ def wordle_solver(word_list=None):
             logging.info(prGreen(f"Congrats! Word is {guess}."))
             break
 
+        # Logic to account for when a letter in a word can duplicate, and have >1 response
+        # For ex, "WHICH" has 2 Hs. "CHEEK" has only 1. Wordle response: NCNLN. H has 2 responses.
+        # The specific case that came up included the following process:
+            # NYMPH : nnnnl
+            # GOURD : nnnnn
+            # BLAST : nnnnn
+            # WHICH : ncnln
+            # CHEEK : ccccc (lucky guess)
+
+        # Find pairings, where you have a letter with CC, or LL, or NN
+        # Specifically, screening for when two Ns exist
+        nn_counter = False
+        pairings = list( zip( list(guess), list(guess_result) ) )
+        pairings = dict(Counter(pairings))
+        for i,v in pairings.items():
+            if v > 1 and 'N' in i[1]:
+                nn_counter = True
+
+        # Identify the letters that have duplicates
+        duplicate_list = []
+        test_for_counter = dict(Counter(guess))
+        for key,val in test_for_counter.items():
+            if val > 1:
+                duplicate_list.append(key)
+                logging.info(f"Duplicate values found. See list: {duplicate_list}")
+
         # If duplicate list exists, substitute any Ns for duplicate with Ls
-        if len(duplicate_list) != 0:
+        if len(duplicate_list) != 0 and nn_counter == False:
             guess_result_list = list(guess_result)
             for pos,letter in enumerate(guess):
                 if letter in duplicate_list:
