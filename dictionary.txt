@@ -24929,6 +24929,7 @@ forgiving
 forgivingly
 forgivingness
 forgot
+forgo
 forgotten
 forint
 fork
