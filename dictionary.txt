@@ -15483,6 +15483,7 @@ creole
 creole-fish
 creosote
 crepe
+crept
 crepidam
 crepis
 crepitate
