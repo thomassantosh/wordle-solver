@@ -11727,7 +11727,7 @@ chid
 chide
 chiding
 chief
-chief(a)
+chief
 chiefdom
 chiefly
 chieftain
