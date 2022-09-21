@@ -51045,6 +51045,7 @@ recalescence
 recall
 recant
 recantation
+recap
 recapitulate
 recapitulation
 recapper
