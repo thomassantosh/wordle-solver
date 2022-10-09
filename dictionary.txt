@@ -30034,6 +30034,7 @@ hover
 hovercraft
 hovering
 how
+howdy
 how-do-you-do
 howbeit
 howdah
