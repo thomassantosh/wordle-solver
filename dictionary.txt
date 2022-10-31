@@ -896,6 +896,7 @@ adansonia
 adapa
 adapid
 adapt
+aptly
 adaptability
 adaptable
 adaptation
